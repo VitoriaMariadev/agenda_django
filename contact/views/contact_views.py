@@ -9,7 +9,25 @@ def index(resquest):
     context = {
         'contacts': contacts,
         'site_title': 'Contatos - '
-    },
+    }
+
+    return render(
+        resquest,
+        'contact/index.html',
+        context
+    )
+
+def search(resquest):
+
+    search_value = resquest.GET['q']
+    print(search_value)
+
+    contacts = Contact.objects.filter(show=True).order_by('-id')[:10]
+
+    context = {
+        'contacts': contacts,
+        'site_title': 'Search - '
+    }
 
     return render(
         resquest,
@@ -30,7 +48,7 @@ def contact(resquest, contact_id):
 
     context = {
         'contact': single_contact,
-        'site_title': site_title
+        'site_title': site_title,
     }
 
     return render(
